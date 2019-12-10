@@ -1,4 +1,6 @@
-# h5-camera
+# 测试 H5 调用摄像头
+
+参考资料：[MediaDevices.getUserMedia()](https://developer.mozilla.org/zh-CN/docs/Web/API/MediaDevices/getUserMedia)
 
 ## Project setup
 ```
