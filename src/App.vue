@@ -21,7 +21,7 @@
   }
   html {
     box-sizing: border-box;
-    background: #fff;
+    background: #fafafa;
     height: 100%;
   }
   body {
