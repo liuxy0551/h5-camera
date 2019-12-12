@@ -19,4 +19,13 @@
     color: #2c3e50;
     margin-top: 60px;
   }
+  html {
+    box-sizing: border-box;
+    background: #fff;
+    height: 100%;
+  }
+  body {
+    background: #fafafa;
+    height: 100%;
+  }
 </style>
