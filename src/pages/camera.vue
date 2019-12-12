@@ -3,10 +3,10 @@
     <div class="title">H5 页面调用摄像头与拾音器</div>
 
     <div class="btn-box">
-      <van-button plain type="info" @click="startCamera">开 始</van-button>
-      <van-button plain type="info" @click="pauseCamera" v-if="!pausePlay">暂 停</van-button>
-      <van-button plain type="info" @click="continueCamera" v-else>继 续</van-button>
-      <van-button plain type="info" @click="stopCamera">停 止</van-button>
+      <van-button plain type="info" @click="startCamera" :disabled="cameraStatus !== 'ready'">开 始</van-button>
+      <van-button plain type="info" @click="pauseCamera" :disabled="cameraStatus !== 'play'">暂 停</van-button>
+      <van-button plain type="info" @click="continueCamera" :disabled="cameraStatus !== 'pause'">继 续</van-button>
+      <van-button plain type="info" @click="stopCamera" :disabled="cameraStatus !== 'play'">停 止</van-button>
     </div>
 
     <video></video>
@@ -20,7 +20,7 @@
         camera: null,
         video: null,
         mediaStreamTrack: null,
-        pausePlay: false
+        cameraStatus: 'ready'
       }
     },
     methods: {
@@ -33,19 +33,20 @@
       },
       // 暂停按钮
       pauseCamera () {
-        this.pausePlay = true
         this.video && this.video.pause()
+        this.cameraStatus = 'pause'
       },
       // 继续按钮
       continueCamera () {
-        this.pausePlay = false
         this.video && this.video.play()
+        this.cameraStatus = 'play'
       },
       // 停止按钮
       stopCamera () {
         if (this.mediaStreamTrack) {
           for (let i of this.mediaStreamTrack) {
             i.stop()
+            this.cameraStatus = 'ready'
           }
           this.camera = null
           this.video = null
@@ -72,6 +73,7 @@
           this.video.srcObject = mediaStream
           this.video.onloadedmetadata = () => {
             this.video.play()
+            this.cameraStatus = 'play'
           }
         }).catch((err) => {
           console.log(err.name + '：' + err.message)
@@ -86,7 +88,7 @@
     padding-top: 30px;
   }
   .btn-box {
-    padding: 30px 50px;
+    padding: 30px 20px;
     display: flex;
     justify-content: space-between;
   }
